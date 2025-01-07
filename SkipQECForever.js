@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Random Radio Button, Select, Textarea Filler, and Submit
 // @namespace    http://tampermonkey.net/
-// @version      1.3
-// @description  Automatically selects a random radio button, dropdown option, or fills textareas with random words, excluding "Select", and submits the form
+// @version      1.5
+// @description  Automatically selects a random radio button, dropdown option, or fills textareas with random words, excluding "Select" and similar options, and submits the form
 // @author       You
 // @match        *://*/*
 // @grant        none
@@ -56,7 +56,7 @@
         // Handle <select> dropdown menus
         const selectElements = Array.from(document.querySelectorAll('select'));
         selectElements.forEach(select => {
-            const options = Array.from(select.options).filter(option => option.value && option.text.toLowerCase() !== "select");
+            const options = Array.from(select.options).filter(option => option.value && !option.text.toLowerCase().includes("select"));
             if (options.length > 0) {
                 const randomIndex = Math.floor(Math.random() * options.length);
                 const selectedOption = options[randomIndex];
@@ -73,7 +73,16 @@
             console.log(`Filled textarea with: "${randomText}"`);
         });
 
-        // Submit the form
+        // Handle the "Save Proforma Proforma" button
+        const saveButton = document.querySelector('#ctl00_ContentPlaceHolder2_btnSave');
+        if (saveButton) {
+            saveButton.click(); // Click the Save button
+            console.log('Clicked "Save Proforma Proforma" button.');
+        } else {
+            console.log('"Save Proforma Proforma" button not found.');
+        }
+
+        // Submit the form if "Save Proforma Proforma" button wasn't found (fallback)
         const submitButton = document.querySelector('input[type="submit"][value="Submit Proforma"]');
         if (submitButton) {
             submitButton.click();
