@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      1.5
 // @description  Automatically selects a random radio button, dropdown option, or fills textareas with random words, excluding "Select" and similar options, and submits the form
-// @author       You
+// @author       Zer0sama
 // @match        *://*/*
 // @grant        none
 // ==/UserScript==
